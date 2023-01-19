@@ -7,12 +7,19 @@ import {
 } from 'react-native';
 
 
+
 type SectionProps = PropsWithChildren<{
     title: string;
 }>;
 
 
+
+
 function Section({children, title}: SectionProps): JSX.Element {
+
+
+
+
     const isDarkMode = true;
     return (
         <View style={styles.sectionContainer}>

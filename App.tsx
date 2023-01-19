@@ -19,11 +19,25 @@ import {
   DebugInstructions,
   Header,
   LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Section from "./src/main/Section.component";
+import * as ClientHTTP from "./src/main/services/ClientHTTP.service";
+
+function startDomotic(){
+  console.log("Start Domoticz")
+
+  const formData = new FormData();
+  formData.append("username", "Z")
+  formData.append("password", "9")
+  formData.append("rememberme", false)
 
 
+  ClientHTTP.call('POST', 'https://192.168.1.83:8443', '/json.htm?type=command&param=logincheck', null, formData)
+      .then(data => console.log(data))
+      .catch(e => {
+        console.error("Erreur " + e);
+      })
+}
 
 function App(): JSX.Element {
   const isDarkMode = true;
@@ -31,7 +45,7 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
+  startDomotic();
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -47,7 +61,7 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
 
-          <Section title="Domoticz 2">
+          <Section title="Domoticz">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
           </Section>
